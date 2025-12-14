@@ -18,25 +18,22 @@
       <div class="logo-text">LibrarySystem</div>
     </div>
 
-    <div class="search-section">
-      <div class="search-container">
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-input" placeholder="Search books, authors, categories...">
-        <button class="search-btn">
-          <i class="fas fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
+    <a href="{{ route('news.index') }}" class="book-btn secondary"
+      style="margin-left: 15px; display:flex; align-items:center;">
+      <i class="fas fa-newspaper" style="margin-right:5px;"></i> News and Announcements
+    </a>
 
     @auth
-    <div class="user-section">
-      <div class="user-info">
-        <a href="{{ route('show.profile') }}" class="user-avatar">
-          <img src="{{ asset('storage/' . $profile->profile_picture) }}" alt="profile-pic" srcset="">
-          <i class="user-name">{{ Auth::user()->name }}</i>
-        </a>
+      <div class="user-section">
+        <div class="user-info">
+          <a href="{{ route('show.profile') }}" class="user-avatar">
+            <img src="{{ $profile?->profile_picture
+      ? asset('storage/' . $profile->profile_picture)
+      : asset('images/default.jpg') }}" alt="profile-pic">
+            <i class="user-name">{{ Auth::user()->name }}</i>
+          </a>
+        </div>
       </div>
-    </div>
     @endauth
   </header>
 
@@ -63,17 +60,18 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#edit" class="nav-link" title="Edit">
-              <i class="fas fa-edit nav-icon"></i>
-              <span class="nav-text">Edit</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#bookmarks" class="nav-link" title="Bookmarks">
+            <a href="{{ route('bookmarks.index') }}" class="nav-link" title="Bookmarks">
               <i class="fas fa-bookmark nav-icon"></i>
               <span class="nav-text">Bookmark</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('staff.index') }}" class="nav-link" title="Edit">
+              <i class="fas fa-address-card nav-icon"></i>
+              <span class="nav-text">Staff</span>
+            </a>
+          </li>
+
         </ul>
         <div class="sidebar-logout">
           <form action="{{ route('logout') }}" method="POST" class="logout-form">
@@ -91,7 +89,7 @@
       <!-- Page Header -->
       <div class="page-header">
         @auth
-            <h1 class="page-title">Welcome, {{ Auth::user()->name }}</h1>
+          <h1 class="page-title">Welcome, {{ Auth::user()->name }}</h1>
         @endauth
         <p class="page-subtitle">
           Here's what's happening with your library today. Continue your reading journey or explore new
@@ -103,16 +101,12 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-header">
-            <h3 class="stat-title">Currently Reading</h3>
+            <h3 class="stat-title">My Booklist</h3>
             <div class="stat-icon">
               <i class="fas fa-book-open"></i>
             </div>
           </div>
-          <div class="stat-value">3</div>
-          <div class="stat-change positive">
-            <i class="fas fa-arrow-up"></i>
-            <span>+1 this week</span>
-          </div>
+          <div class="stat-value">{{ $booklist ?? 0 }}</div>
         </div>
 
         <div class="stat-card">
@@ -122,67 +116,68 @@
               <i class="fas fa-check-circle"></i>
             </div>
           </div>
-          <div class="stat-value">42</div>
-          <div class="stat-change positive">
-            <i class="fas fa-arrow-up"></i>
-            <span>+5 this month</span>
-          </div>
+          <div class="stat-value">{{ $booklistCounts['finished'] ?? 0 }}</div>
         </div>
 
         <div class="stat-card">
           <div class="stat-header">
-            <h3 class="stat-title">Reading Hours</h3>
+            <h3 class="stat-title">Currently Reading</h3>
             <div class="stat-icon">
               <i class="fas fa-clock"></i>
             </div>
           </div>
-          <div class="stat-value">156</div>
-          <div class="stat-change positive">
-            <i class="fas fa-arrow-up"></i>
-            <span>+12 this week</span>
-          </div>
+          <div class="stat-value">{{ $booklistCounts['reading'] ?? 0 }}</div>
         </div>
 
         <div class="stat-card">
           <div class="stat-header">
-            <h3 class="stat-title">Wishlist</h3>
+            <h3 class="stat-title">Bookmarks</h3>
             <div class="stat-icon">
-              <i class="fas fa-heart"></i>
+              <i class="fas fa-bookmark"></i>
             </div>
           </div>
-          <div class="stat-value">18</div>
-          <div class="stat-change negative">
-            <i class="fas fa-arrow-down"></i>
-            <span>-2 this week</span>
-          </div>
+          <div class="stat-value">{{ $bookmarks ?? 0 }}</div>
         </div>
       </div>
 
       <div class="content-grid">
         <!-- Book of the Month -->
         <div class="content-card">
-          <h2><i class="fas fa-crown"></i> Book of the Month</h2>
+          <h2><i class="fas fa-crown"></i> New Book Upload</h2>
           <div class="book-of-month">
             <div class="book-cover">
-              <i class="fas fa-book"></i>
+              <img src="{{ $newBook?->cover_picture
+  ? asset('storage/' . $newBook->cover_picture)
+  : asset('images/book-cover.png') }}" alt="book_cover" class="book-cover">
             </div>
             <div class="book-info">
-              <h3 class="book-title">The Journey to the West</h3>
-              <p class="book-author">By Litewaran</p>
+              <h3 class="book-title">{{ $newBook->title ?? 'No Book Upload Yet' }}</h3>
+              <p class="book-author">{{ $newBook->author ?? 'Unknown Author' }}</p>
               <p class="book-description">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen
-                book.
+                {{ $newBook->description ?? 'Coming Soon...' }}
               </p>
               <div class="book-actions">
-                <a href="#read" class="book-btn primary">
-                  <i class="fas fa-play"></i> Start Reading
-                </a>
-                <a href="#details" class="book-btn secondary">
-                  <i class="fas fa-info-circle"></i> View Details
-                </a>
+                @if($newBook?->id)
+                  <button class="book-btn primary add-to-list-btn" data-book-id="{{ $newBook->id }}">
+                    <i class="fas fa-plus"></i> Add to List
+                  </button>
+                @else
+                  <button class="book-btn primary" disabled>
+                    <i class="fas fa-ban"></i> No book available
+                  </button>
+                @endif
+
+                @if($newBook?->id)
+                  <a href="{{ route('books.show', $newBook) }}" class="book-btn secondary">
+                    <i class="fas fa-info-circle"></i> View Details
+                  </a>
+                @else
+                  <span class="book-btn secondary disabled">
+                    No details
+                  </span>
+                @endif
               </div>
+
             </div>
           </div>
         </div>
@@ -190,25 +185,37 @@
         <!-- Popular Releases -->
         <div class="content-card">
           <h2><i class="fas fa-fire"></i> Popular Releases</h2>
+
           <div class="releases-grid">
-            @for($i = 1; $i <= 4; $i++) <div class="release-item">
-              <div class="release-cover">
-                <i class="fas fa-book"></i>
-              </div>
-              <div class="release-info">
-                <h4 class="release-title">New Selection {{ $i }}</h4>
-                <p class="release-author">Author Name</p>
-                <div class="release-rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star-half-alt"></i>
-                </div>
-              </div>
+            @foreach ($popularBooks as $book)
+                      <div class="release-item">
+                        <div class="release-cover">
+                          <img src="{{ $book->cover_picture
+              ? asset('storage/' . $book->cover_picture)
+              : asset('images/book-cover.png') }}" alt="book_cover" class="release-cover-img">
+                        </div>
+
+                        <div class="release-info">
+                          <h4 class="release-title">{{ $book->title ?? 'Not Available' }}</h4>
+                          <p class="release-author">{{ $book->author ?? 'Coming Soon...' }}</p>
+
+                          <div class="release-rating">
+                            @for ($i = 1; $i <= 5; $i++)
+                              @if ($i <= floor($book->rating))
+                                <i class="fas fa-star"></i>
+                              @elseif ($i - $book->rating >= 0.5)
+                                <i class="fas fa-star-half-alt"></i>
+                              @else
+                                <i class="far fa-star"></i>
+                              @endif
+                            @endfor
+                          </div>
+                        </div>
+                      </div>
+            @endforeach
           </div>
-          @endfor
         </div>
+
       </div>
   </div>
   </main>
@@ -236,19 +243,49 @@
       });
     });
 
-    // Search input (enter key)
-    document.querySelector('.search-input')?.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        const query = this.value.trim();
-        if (query) alert(`Searching for: "${query}"`);
-      }
+    document.querySelectorAll('.add-to-list-btn').forEach(btn => {
+      btn.addEventListener('click', async function () {
+        const bookId = this.dataset.bookId;
+        if (!bookId) return;
+        const button = this;
+
+        button.disabled = true;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        try {
+          const response = await fetch('/booklists', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+              book_id: bookId,
+              status: 'want_to_read'
+            })
+          });
+
+          const result = await response.json();
+
+          if (response.ok && result.success) {
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            button.classList.add('success');
+          } else {
+            alert(result.message || 'Already in your list.');
+            resetBtn(button);
+          }
+        } catch {
+          alert('Request failed.');
+          resetBtn(button);
+        }
+      });
     });
 
-    // Search button
-    document.querySelector('.search-btn')?.addEventListener('click', function () {
-      const query = document.querySelector('.search-input').value.trim();
-      if (query) alert(`Searching for: "${query}"`);
-    });
+    function resetBtn(btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-plus"></i> Add to List';
+    }
   </script>
 </body>
 
