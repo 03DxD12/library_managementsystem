@@ -18,12 +18,10 @@
                 </a>
             </div>
             <nav class="header-nav">
-                <a href="{{ route('show.home') }}"><i class="fas fa-home"></i> Home</a>
+            
                 <a href="{{ route('books.index') }}" class="active"><i class="fas fa-book"></i> Books</a>
                 <a href="{{ route('booklists.index') }}"><i class="fas fa-list"></i> My Booklists</a>
-                @auth
-                    <a href="{{ route('show.profile') }}"><i class="fas fa-user"></i> Profile</a>
-                @endauth
+                
             </nav>
         </div>
     </header>
@@ -131,7 +129,7 @@
                                                 <i class="far fa-star"></i>
                                             @endif
                                         @endfor
-                                        <span class="rating-value">{{ number_format($book->rating, 1) }}</span>
+                                        <span class="rating-value">{{ number_format($book->rating, 2) }}</span>
                                     </div>
 
                                     <div class="book-meta">
