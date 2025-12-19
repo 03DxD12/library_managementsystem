@@ -1,0 +1,97 @@
+erDiagram
+    USERS {
+        bigint id PK
+        varchar name
+        varchar email
+        varchar password
+        enum role
+        varchar remember_token
+        timestamps
+    }
+    PROFILES {
+        bigint id PK
+        bigint user_id FK
+        varchar profile_picture
+        text bio
+        varchar phone
+        varchar address
+        timestamps
+    }
+    BOOKS {
+        bigint id PK
+        varchar title
+        varchar author
+        text description
+        varchar cover_picture
+        varchar content_file
+        decimal rating
+        int total_copies
+        int available_copies
+        varchar isbn
+        varchar publisher
+        int publication_year
+        varchar category
+        varchar language
+        int pages
+        enum status
+        timestamps
+    }
+    BOOKLISTS {
+        bigint id PK
+        bigint user_id FK
+        bigint book_id FK
+        enum status
+        text notes
+        decimal user_rating
+        timestamps
+    }
+    BOOKMARKS {
+        bigint id PK
+        bigint user_id FK
+        bigint book_id FK
+        int last_page
+        timestamps
+    }
+    ABOUTS {
+        bigint id PK
+        varchar title
+        longtext description
+        longtext mission
+        longtext vision
+        longtext features
+        json developer_name
+        timestamps
+    }
+    MENUS {
+        bigint id PK
+        varchar title
+        varchar slug
+        enum type
+        varchar url
+        longtext content
+        tinyint is_active
+        timestamps
+    }
+    SESSIONS {
+        varchar id PK
+        bigint user_id FK
+        varchar ip_address
+        text user_agent
+        longtext payload
+        int last_activity
+    }
+    PERSONAL_ACCESS_TOKENS {
+        bigint id PK
+        varchar name
+        bigint tokenable_id
+        varchar token
+        longtext abilities
+        timestamps
+    }
+
+    USERS ||--o{ PROFILES : has
+    USERS ||--o{ BOOKLISTS : owns
+    BOOKS ||--o{ BOOKLISTS : "listed_in"
+    USERS ||--o{ BOOKMARKS : bookmarks
+    BOOKS ||--o{ BOOKMARKS : "has"
+    USERS ||--o{ PERSONAL_ACCESS_TOKENS : tokens

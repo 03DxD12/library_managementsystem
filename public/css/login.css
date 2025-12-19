@@ -5,24 +5,6 @@
 }
 
 body {
-<<<<<<<<< Temporary merge branch 1
-             background: #dfb87d;
-             min-height: 100vh;
-             display: flex;
-             flex-direction: column;
-             overflow:hidden;
-             
-         }
-
-         .container {
-             flex: 1;
-             width: 100%;
-             display: flex;
-             justify-content: center;
-             align-items: center;
-             padding: 40px 20px;
-         }
-=========
     position: relative;
     background: #dfb87d;
     min-height: 100vh;
@@ -70,7 +52,6 @@ header h1 {
 header h1:hover {
     transform: translateY(-2px);
 }
->>>>>>>>> Temporary merge branch 2
 
 /* ===================== MAIN CONTAINER ===================== */
 main {

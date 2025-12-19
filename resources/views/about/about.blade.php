@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,38 +32,46 @@
             <div class="sidebar-content">
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a href="{{ route('show.home') }}" class="nav-link {{ request()->routeIs('show.home') ? 'active' : '' }}" title="Dashboard">
+                        <a href="{{ route('show.home') }}"
+                            class="nav-link {{ request()->routeIs('show.home') ? 'active' : '' }}" title="Dashboard">
                             <i class="fas fa-home nav-icon"></i>
                             <span class="nav-text">Home</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('show.about') }}" class="nav-link {{ request()->routeIs('show.about') ? 'active' : '' }}" title="About">
+                        <a href="{{ route('show.about') }}"
+                            class="nav-link {{ request()->routeIs('show.about') ? 'active' : '' }}" title="About">
                             <i class="fas fa-solid fa-eye nav-icon"></i>
                             <span class="nav-text">About</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('books.index') }}" class="nav-link {{ request()->routeIs('books.index') ? 'active' : '' }}" title="Books">
+                        <a href="{{ route('books.index') }}"
+                            class="nav-link {{ request()->routeIs('books.index') ? 'active' : '' }}" title="Books">
                             <i class="fas fa-book nav-icon"></i>
                             <span class="nav-text">Books</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('bookmarks.index') }}" class="nav-link {{ request()->routeIs('bookmarks.index') ? 'active' : '' }}" title="Bookmarks">
+                        <a href="{{ route('bookmarks.index') }}"
+                            class="nav-link {{ request()->routeIs('bookmarks.index') ? 'active' : '' }}"
+                            title="Bookmarks">
                             <i class="fas fa-bookmark nav-icon"></i>
                             <span class="nav-text">Bookmark</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('staff.index') }}" class="nav-link {{ request()->routeIs('staff.index') ? 'active' : '' }}" title="Staff">
+                        <a href="{{ route('staff.index') }}"
+                            class="nav-link {{ request()->routeIs('staff.index') ? 'active' : '' }}" title="Staff">
                             <i class="fas fa-address-card nav-icon"></i>
                             <span class="nav-text">Staff</span>
                         </a>
                     </li>
                     @if (auth()->user()->role === 'librarian')
                         <li class="nav-item">
-                            <a href="{{ route('about.edit') }}" class="nav-link {{ request()->routeIs('about.edit') ? 'active' : '' }}" title="Edit About">
+                            <a href="{{ route('about.edit') }}"
+                                class="nav-link {{ request()->routeIs('about.edit') ? 'active' : '' }}"
+                                title="Edit About">
                                 <i class="fas fa-edit nav-icon"></i>
                                 <span class="nav-text">Edit About</span>
                             </a>
@@ -70,15 +79,15 @@
                     @endif
                 </ul>
                 @auth
-                <div class="sidebar-logout">
-                    <form action="{{ route('logout') }}" method="POST" class="logout-form">
-                        @csrf
-                        <button type="submit" class="sidebar-logout-btn" title="Logout">
-                            <i class="fas fa-sign-out-alt sidebar-logout-icon"></i>
-                            <span class="sidebar-logout-text">Logout</span>
-                        </button>
-                    </form>
-                </div>
+                    <div class="sidebar-logout">
+                        <form action="{{ route('logout') }}" method="POST" class="logout-form">
+                            @csrf
+                            <button type="submit" class="sidebar-logout-btn" title="Logout">
+                                <i class="fas fa-sign-out-alt sidebar-logout-icon"></i>
+                                <span class="sidebar-logout-text">Logout</span>
+                            </button>
+                        </form>
+                    </div>
                 @endauth
             </div>
         </nav>
@@ -131,14 +140,6 @@
                     <h2><i class="fas fa-cogs"></i> System Features</h2>
                     <div class="card-content">
                         <p class="features-text" id="features"></p>
-                    </div>
-                </section>
-
-                <!-- Logo/Image -->
-                <section class="content-card" id="logoSection" style="display: none;">
-                    <h2><i class="fas fa-image"></i> Our Logo</h2>
-                    <div class="card-content text-center">
-                        <img id="logoImage" src="" alt="Library Logo" class="about-logo">
                     </div>
                 </section>
 
@@ -252,13 +253,6 @@
                 document.getElementById('features').textContent = data.features;
                 document.getElementById('featuresSection').style.display = 'block';
             }
-
-            // Logo/Image
-            if (data.image) {
-                document.getElementById('logoImage').src = data.image;
-                document.getElementById('logoSection').style.display = 'block';
-            }
-
             // Developer Info
             if (data.developer_name) {
                 const teamGrid = document.getElementById('teamGrid');
@@ -271,8 +265,7 @@
                             ${data.developer_email ? `<p class="member-email"><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:${data.developer_email}" class="email-link">${data.developer_email}</a></p>` : ''}
                         </div>
                     `;
-                }
-                else if (Array.isArray(data.developer_name)) {
+                } else if (Array.isArray(data.developer_name)) {
                     let html = '';
                     data.developer_name.forEach(member => {
                         html += `
@@ -284,8 +277,7 @@
                         `;
                     });
                     teamGrid.innerHTML = html;
-                }
-                else if (typeof data.developer_name === 'object') {
+                } else if (typeof data.developer_name === 'object') {
                     teamGrid.innerHTML = `
                         <div class="team-member-card">
                             <p class="member-name"><strong><i class="fas fa-user"></i> Name:</strong> ${data.developer_name.name || 'N/A'}</p>
@@ -304,11 +296,13 @@
                 let html = '';
 
                 if (data.contact_email) {
-                    html += `<p class="contact-email"><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:${data.contact_email}" class="email-link">${data.contact_email}</a></p>`;
+                    html +=
+                        `<p class="contact-email"><strong><i class="fas fa-envelope"></i> Email:</strong> <a href="mailto:${data.contact_email}" class="email-link">${data.contact_email}</a></p>`;
                 }
 
                 if (data.contact_phone) {
-                    html += `<p class="contact-phone"><strong><i class="fas fa-phone"></i> Phone:</strong> ${data.contact_phone}</p>`;
+                    html +=
+                        `<p class="contact-phone"><strong><i class="fas fa-phone"></i> Phone:</strong> ${data.contact_phone}</p>`;
                 }
 
                 contactInfo.innerHTML = html;
@@ -327,4 +321,5 @@
         }
     </script>
 </body>
+
 </html>

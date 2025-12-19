@@ -93,7 +93,8 @@
                     <!-- Title -->
                     <div class="form-group">
                         <label for="title"><i class="fas fa-heading"></i> Page Title:</label>
-                        <input type="text" id="title" name="title" value="{{ old('title', $about->title) }}" required>
+                        <input type="text" id="title" name="title" value="{{ old('title', $about->title) }}"
+                            required>
                     </div>
 
                     <!-- Contact Email -->
@@ -106,8 +107,7 @@
                     <!-- Description -->
                     <div class="form-group full-width">
                         <label for="description"><i class="fas fa-align-left"></i> Description:</label>
-                        <textarea id="description" name="description"
-                            rows="4">{{ old('description', $about->description) }}</textarea>
+                        <textarea id="description" name="description" rows="4">{{ old('description', $about->description) }}</textarea>
                     </div>
 
                     <!-- Mission -->
@@ -125,36 +125,15 @@
                     <!-- Features -->
                     <div class="form-group full-width">
                         <label for="features"><i class="fas fa-cogs"></i> System Features:</label>
-                        <textarea id="features" name="features"
-                            rows="6">{{ old('features', $about->features) }}</textarea>
+                        <textarea id="features" name="features" rows="6">{{ old('features', $about->features) }}</textarea>
                         <small><i class="fas fa-info-circle"></i> Separate features with commas or new lines</small>
                     </div>
 
                     <!-- Contact Phone -->
                     <div class="form-group">
                         <label for="contact_phone"><i class="fas fa-phone"></i> Contact Phone:</label>
-                        <input type="text" id="contact_phone" name="contact_phone"
+                        <input type="number" id="contact_phone" name="contact_phone" max="9999999999"
                             value="{{ old('contact_phone', $about->contact_phone) }}">
-                    </div>
-
-                    <!-- Image Upload -->
-                    <div class="form-group full-width">
-                        <label for="image"><i class="fas fa-image"></i> Logo/Image:</label>
-                        <div class="file-upload-wrapper">
-                            <input type="file" id="image" name="image" accept="image/*" class="file-upload">
-                            <label for="image" class="file-upload-label">
-                                <i class="fas fa-cloud-upload-alt"></i> Choose Image
-                            </label>
-                        </div>
-
-                        @if($about->image)
-                            <div class="current-image">
-                                <p><strong>Current image:</strong></p>
-                                <div class="image-preview">
-                                    <img src="{{ asset('storage/' . $about->image) }}" alt="Current logo">
-                                </div>
-                            </div>
-                        @endif
                     </div>
 
                     <!-- Submit Buttons -->
@@ -175,9 +154,9 @@
                     <i class="fas fa-info-circle"></i> To update team members, please contact the system administrator.
                 </p>
 
-                @if($about->developer_name && is_array($about->developer_name))
+                @if ($about->developer_name && is_array($about->developer_name))
                     <div class="team-list">
-                        @foreach($about->developer_name as $index => $member)
+                        @foreach ($about->developer_name as $index => $member)
                             <div class="team-member-card">
                                 <div class="team-member-header">
                                     <span class="member-number">{{ $index + 1 }}</span>
@@ -187,7 +166,8 @@
                                     <p class="member-role"><strong><i class="fas fa-briefcase"></i> Role:</strong>
                                         {{ $member['role'] }}</p>
                                     <p class="member-email"><strong><i class="fas fa-envelope"></i> Email:</strong>
-                                        <a href="mailto:{{ $member['email'] }}" class="email-link">{{ $member['email'] }}</a>
+                                        <a href="mailto:{{ $member['email'] }}"
+                                            class="email-link">{{ $member['email'] }}</a>
                                     </p>
                                 </div>
                             </div>
@@ -211,7 +191,7 @@
     </footer>
 
     <script>
-        document.getElementById('aboutForm').addEventListener('submit', async function (event) {
+        document.getElementById('aboutForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
             const formData = new FormData(this);
@@ -269,7 +249,7 @@
         });
 
         // File upload styling
-        document.getElementById('image').addEventListener('change', function (e) {
+        document.getElementById('image').addEventListener('change', function(e) {
             const fileName = e.target.files[0]?.name;
             const label = document.querySelector('.file-upload-label');
             if (fileName) {
@@ -279,7 +259,7 @@
 
         // Sidebar active links
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function() {
                 document.querySelectorAll('.nav-link').forEach(item => item.classList.remove('active'));
                 this.classList.add('active');
             });
