@@ -26,3 +26,4 @@ Implement changes with surgical, minimal diffs. Reuse every existing helper, uti
 - Never rewrite a file wholesale when a targeted edit suffices.
 - Never install a Composer or NPM package without explicit approval.
 - Never bypass middleware, policies, or form request validation.
+

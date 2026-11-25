@@ -29,3 +29,4 @@ Summary: <one paragraph>
 ## Constraints
 - Read-only phase — do not modify application code during this skill.
 - Stop after the summary; pass findings directly to `superpowers` for planning.
+

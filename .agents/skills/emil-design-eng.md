@@ -32,3 +32,4 @@ Annotated list of elements with their transition definitions.
 - Never use `transition: all`.
 - Never use JS `setTimeout` to fake animation timing — use `transitionend` events.
 - Bootstrap's built-in transitions are acceptable; override only when they violate the rules above.
+

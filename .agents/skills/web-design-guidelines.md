@@ -62,3 +62,4 @@ Fixes:
 ## Constraints
 - Never mark an audit as PASS with known open issues.
 - Fixes must not change visual design — only accessibility attributes, semantic elements, and focus styles.
+

@@ -43,3 +43,4 @@ Bullet list of changes with `file:line` references.
 ## Constraints
 - Do not change colours, fonts, or layout during this pass — only the properties above.
 - Do not add new CSS classes; extend existing ones or add targeted overrides.
+
