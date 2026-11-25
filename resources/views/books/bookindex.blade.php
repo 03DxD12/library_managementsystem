@@ -167,6 +167,31 @@
     </footer>
 
     <script>
+        // Toast notification — replaces browser alert()
+        function showToast(message, type = 'success') {
+            let container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.setAttribute('aria-live', 'polite');
+                container.setAttribute('aria-atomic', 'false');
+                container.style.cssText = 'position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;display:flex;flex-direction:column;gap:.5rem;';
+                document.body.appendChild(container);
+            }
+            const colors = { success: '#10b981', error: '#ef4444', info: '#3b82f6' };
+            const toast = document.createElement('div');
+            toast.setAttribute('role', 'status');
+            toast.style.cssText = `background:${colors[type] ?? colors.info};color:#fff;padding:.75rem 1.25rem;border-radius:8px;font-weight:600;font-size:.95rem;box-shadow:0 4px 12px rgba(0,0,0,.18);opacity:0;transform:translateY(8px);transition:opacity .2s ease-out,transform .2s cubic-bezier(.22,1,.36,1);max-width:320px;`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(8px)';
+                setTimeout(() => toast.remove(), 220);
+            }, 3500);
+        }
+
         // Add to booklist functionality
         document.querySelectorAll('.add-to-list-btn').forEach(btn => {
             btn.addEventListener('click', async function() {
@@ -175,7 +200,7 @@
                 
                 // Disable button to prevent double clicks
                 button.disabled = true;
-                button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+                button.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Adding...';
                 
                 try {
                     const response = await fetch('/booklists', {
@@ -194,19 +219,19 @@
                     const result = await response.json();
                     
                     if (response.ok && result.success) {
-                        alert('✓ Book added to your list!');
-                        button.innerHTML = '<i class="fas fa-check"></i> Added';
+                        showToast('✓ Book added to your list!', 'success');
+                        button.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Added';
                         button.classList.add('btn-success');
                     } else {
-                        alert(result.message || 'Failed to add book. It may already be in your list.');
+                        showToast(result.message || 'Already in your list.', 'error');
                         button.disabled = false;
-                        button.innerHTML = '<i class="fas fa-plus"></i> Add to List';
+                        button.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Add to List';
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
+                    showToast('Failed to add book. Please try again.', 'error');
                     button.disabled = false;
-                    button.innerHTML = '<i class="fas fa-plus"></i> Add to List';
+                    button.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Add to List';
                 }
             });
         });

@@ -75,7 +75,7 @@ body {
     margin-left: 30px;
     flex-wrap: wrap;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: opacity 0.25s ease-out;
 }
 
 .header-nav a {
@@ -202,12 +202,18 @@ body {
 .modal-content button {
   margin: 5px;
   padding: 12px 24px;
+  min-height: 44px;
   border-radius: 25px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
   border: none;
-  transition: all 0.3s ease;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease-out;
+}
+
+.modal-content button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .modal-content button.primary {
@@ -249,12 +255,19 @@ body {
     align-items: center;
     gap: 8px;
     padding: 20px 0;
+    min-height: 60px;
     text-decoration: none;
     color: var(--text-dark);
     width: 100%;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease-out, color 0.2s ease-out;
     font-weight: 500;
     position: relative;
+}
+
+.nav-link:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: -3px;
+    border-radius: 4px;
 }
 
 .nav-link:hover {
@@ -306,10 +319,11 @@ body {
     align-items: center;
     gap: 8px;
     padding: 15px 0;
+    min-height: 60px;
     text-decoration: none;
     color: var(--text-dark);
     width: 100%;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease-out, color 0.2s ease-out;
     font-weight: 500;
     border: none;
     background: transparent;
@@ -372,8 +386,12 @@ body {
     border-radius: 15px;
     padding: 25px;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease-out;
     border-left: 4px solid var(--primary);
+}
+
+.stat-value {
+    font-variant-numeric: tabular-nums;
 }
 
 .stat-card:hover {
@@ -520,17 +538,23 @@ body {
 
 .book-btn {
     padding: 12px 24px;
+    min-height: 44px;
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease-out;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     cursor: pointer;
     border: none;
+}
+
+.book-btn:focus-visible {
+    outline: 3px solid var(--primary-dark);
+    outline-offset: 2px;
 }
 
 .book-btn.primary {
@@ -571,7 +595,7 @@ body {
     background: var(--light-bg);
     border-radius: 10px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease-out;
 }
 
 .release-item:hover {

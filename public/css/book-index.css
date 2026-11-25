@@ -107,6 +107,7 @@ body {
     font-weight: 700;
     color: #333;
     margin-bottom: 0.5rem;
+    text-wrap: balance;
 }
 
 .page-subtitle {
@@ -142,6 +143,7 @@ body {
 
 .search-btn {
     padding: 1rem 2rem;
+    min-height: 44px;
     background: linear-gradient(135deg, #e8993a 0%, #d68825 100%);
     color: white;
     border: none;
@@ -149,10 +151,15 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease-out;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.search-btn:focus-visible {
+    outline: 3px solid #d68825;
+    outline-offset: 2px;
 }
 
 .search-btn:hover {
@@ -186,6 +193,7 @@ body {
 
 .filter-btn {
     padding: 0.875rem 2rem;
+    min-height: 44px;
     background: #6c757d;
     color: white;
     border: none;
@@ -193,7 +201,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.2s ease-out;
 }
 
 .filter-btn:hover {
@@ -203,6 +211,7 @@ body {
 
 .clear-btn {
     padding: 0.875rem 2rem;
+    min-height: 44px;
     background: transparent;
     color: #666;
     border: 2px solid #e0e0e0;
@@ -212,7 +221,7 @@ body {
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease-out, border-color 0.2s ease-out;
 }
 
 .clear-btn:hover {
@@ -341,6 +350,7 @@ body {
     color: #666;
     font-weight: 600;
     margin-left: 0.25rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .book-meta {

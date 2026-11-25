@@ -144,6 +144,7 @@ body {
 
 .btn {
     padding: 0.875rem 1.5rem;
+    min-height: 44px;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -154,7 +155,12 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: all 0.3s ease;
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease-out;
+}
+
+.btn:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 2px;
 }
 
 .btn-large {
@@ -263,6 +269,7 @@ body {
     font-size: 1.25rem;
     font-weight: 600;
     color: #666;
+    font-variant-numeric: tabular-nums;
 }
 
 /* Description */
